@@ -6,10 +6,39 @@ spring:
     name: issuing-bank
   datasource:
     url: jdbc:postgresql://localhost:5432/issuing_bank_db
-    username: postgres
-    password: ${DB_PASSWORD:postgres}
+    username: kadamovnk
+    password: 123
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      pool-name: HikariPool-IssuingBank
+      auto-commit: true
+      
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: true
+    
+  cache:
+    type: redis
 
-# Service-specific configuration
+# OpenAPI configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+# Issuing Bank specific settings
 issuing-bank:
-  feature:
-    enable-transaction-logging: true
+  max-retry-attempts: 3
+  transaction-verification-timeout: 30
