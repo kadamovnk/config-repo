@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+      
+  jpa:
+    show-sql: false
+  
+logging:
+  level:
+    root: WARN
+    com.edme: INFO
+    
+management:
+  endpoint:
+    health:
+      show-details: never
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
