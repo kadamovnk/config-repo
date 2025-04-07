@@ -1,16 +1,29 @@
-# Common configuration for all microservices
 spring:
   redis:
     host: localhost
     port: 6379
     
-# Liquibase common configuration
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
 
-# Common logging configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh
+  endpoint:
+    health:
+      show-details: when_authorized
+      
 logging:
   level:
     root: INFO
     com.edme: DEBUG
+    
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+  instance:
+    prefer-ip-address: true
