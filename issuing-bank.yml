@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: issuing-bank
+  datasource:
+    url: jdbc:postgresql://localhost:5432/issuing_bank_db
+    username: postgres
+    password: ${DB_PASSWORD:postgres}
+
+# Service-specific configuration
+issuing-bank:
+  feature:
+    enable-transaction-logging: true
