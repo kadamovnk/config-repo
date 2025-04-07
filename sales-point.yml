@@ -1,0 +1,49 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: sales-point
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sales_point_db
+    username: kadamovnk
+    password: 123
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      pool-name: HikariPool-SalesPoint
+      auto-commit: true
+      
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: true
+    
+  cache:
+    type: redis
+    
+  security:
+    user:
+      name: user
+      password: password
+
+# OpenAPI configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+# Sales Point specific settings
+sales-point:
+  session-timeout: 3600
+  max-batch-size: 50
