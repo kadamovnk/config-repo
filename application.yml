@@ -1,0 +1,16 @@
+# Common configuration for all microservices
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    
+# Liquibase common configuration
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+
+# Common logging configuration
+logging:
+  level:
+    root: INFO
+    com.edme: DEBUG
