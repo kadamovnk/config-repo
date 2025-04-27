@@ -1,0 +1,22 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+
+logging:
+  level:
+    root: INFO
+    com.edme: DEBUG
+    org.springframework.cloud.config: INFO
+    org.springframework.web: INFO
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8001/eureka/
+  instance:
+    prefer-ip-address: true

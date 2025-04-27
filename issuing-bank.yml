@@ -1,0 +1,84 @@
+server:
+  port: 8083
+
+spring:
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000ms
+        max-attempts: 5
+        max-interval: 10000ms
+        multiplier: 2.0
+  
+  application:
+    name: issuing-bank
+
+  datasource:
+    url: jdbc:postgresql://postgres_db_issuing_bank:5432/issuing_bank_db
+    username: kadamovnk
+    password: 123
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      pool-name: HikariPool-IssuingBank
+      auto-commit: true
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: true
+
+  data:
+    redis:
+      host: redis_issuing_bank
+      port: 6379
+
+  cache:
+    type: redis
+    
+# Eureka client configuration
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8001/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${random.value}
+
+# Swagger/OpenAPI configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+# Application-specific settings
+issuing-bank:
+    transaction-timeout: 60
+    batch-size: 100
+    
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
