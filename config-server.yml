@@ -8,7 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: https://bitbucket.edme.pro/scm/japp/kadamov_ny_dec1_config_repo.git
+          uri: https://github.com/kadamovnk/config-repo.git
           default-label: master
           clone-on-start: true
           username: ${CONFIG_USERNAME}
